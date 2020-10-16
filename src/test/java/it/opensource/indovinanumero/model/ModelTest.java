@@ -17,5 +17,6 @@ class ModelTest {
         Model model = new Model();
         model.init();
 
+        int tentativiFatti = model.getTMAX();
     }
 }

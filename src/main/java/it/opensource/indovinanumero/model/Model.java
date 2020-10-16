@@ -17,7 +17,7 @@ public class Model {
 
     private boolean inGioco = false;
 
-    private Set<Integer> tentativiEffettuati = new HashSet<>();
+    private final Set<Integer> tentativiEffettuati = new HashSet<>();
 
     public Model() {
 
