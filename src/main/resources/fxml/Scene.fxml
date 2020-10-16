@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.opensource.indovinanumero.controller.FXMLController">
+    <top>
+        <Label text="Indovina il Numero!" BorderPane.alignment="CENTER"/>
+    </top>
+    <bottom>
+        <TextArea fx:id="txtRisultato" disable="true" editable="false" BorderPane.alignment="CENTER"/>
+    </bottom>
+    <center>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+                <HBox>
+                    <children>
+                        <Button fx:id="btnNuova" mnemonicParsing="false" onAction="#doNuova" text="Nuova Partita">
+                            <HBox.margin>
+                                <Insets right="10.0"/>
+                            </HBox.margin>
+                        </Button>
+                        <Label text="Tentativi Rimasti">
+                            <HBox.margin>
+                                <Insets right="10.0"/>
+                            </HBox.margin>
+                        </Label>
+                        <TextField fx:id="txtRimasti" disable="true"/>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="20.0" top="20.0"/>
+                    </VBox.margin>
+                </HBox>
+                <HBox fx:id="layoutTentativo" disable="true">
+                    <children>
+                        <TextField fx:id="txtTentativi">
+                            <HBox.margin>
+                                <Insets right="10.0"/>
+                            </HBox.margin>
+                        </TextField>
+                        <Button fx:id="btnProva" mnemonicParsing="false" onAction="#doTentativo" text="Prova"/>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="20.0"/>
+                    </VBox.margin>
+                </HBox>
+            </children>
+            <BorderPane.margin>
+                <Insets left="10.0"/>
+            </BorderPane.margin>
+        </VBox>
+    </center>
+</BorderPane>
