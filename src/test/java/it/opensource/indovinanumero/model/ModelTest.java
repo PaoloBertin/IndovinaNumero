@@ -17,6 +17,5 @@ class ModelTest {
         Model model = new Model();
         model.init();
 
-
     }
 }
