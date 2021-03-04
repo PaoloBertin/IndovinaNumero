@@ -3,6 +3,7 @@ package it.opensource.indovinanumero.controller;
 import it.opensource.indovinanumero.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -12,7 +13,7 @@ import java.net.URL;
 import java.security.InvalidParameterException;
 import java.util.ResourceBundle;
 
-public class FXMLController {
+public class FXMLController implements Initializable {
 
     private Model model;
 
@@ -98,8 +99,9 @@ public class FXMLController {
         this.model = model;
     }
 
+    @Override
     @FXML
-    void initialize() {
+    public void initialize(URL location, ResourceBundle resources) {
 
         assert txtRisultato != null : "fx:id=\"txtRisultato\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnNuova != null : "fx:id=\"btnNuova\" was not injected: check your FXML file 'Scene.fxml'.";
