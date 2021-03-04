@@ -36,9 +36,6 @@ public class FXMLController implements Initializable {
     private TextField txtRimasti;
 
     @FXML
-    private HBox layoutTentativo;
-
-    @FXML
     private TextField txtTentativi;
 
     @FXML
@@ -53,7 +50,6 @@ public class FXMLController implements Initializable {
         model.init();
 
         //gestione dell'interfaccia
-        layoutTentativo.setDisable(false);
         txtRisultato.clear();
         txtRimasti.setText(Integer.toString(model.getTMAX()));
         txtTentativi.clear();
@@ -106,10 +102,11 @@ public class FXMLController implements Initializable {
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
 
+        log.trace("inizialize FXMLController");
+
         assert txtRisultato != null : "fx:id=\"txtRisultato\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnNuovaPartita != null : "fx:id=\"btnNuova\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtRimasti != null : "fx:id=\"txtRimasti\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert layoutTentativo != null : "fx:id=\"layoutTentativo\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtTentativi != null : "fx:id=\"txtTentativi\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnProva != null : "fx:id=\"btnProva\" was not injected: check your FXML file 'Scene.fxml'.";
     }

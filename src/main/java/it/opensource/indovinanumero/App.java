@@ -15,11 +15,15 @@ public class App extends Application {
 
     public static void main(String[] args) {
 
+        log.trace("main applicazione");
+
         launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+
+        log.trace("start applicazione");
 
         // carica la vista e la assegna al nodo radice
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene.fxml"));
@@ -38,6 +42,7 @@ public class App extends Application {
         // crea il modello associato alla business logic e lo rende disponibile al controller della vista
         Model model = new Model();
         fxmlController.setModel(model);
+        log.trace("inizializato model in fxmlController");
 
         // definisce la finestra
         stage.setTitle("Indovina Numero");

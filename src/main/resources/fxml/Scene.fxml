@@ -1,80 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.opensource.indovinanumero.controller.FXMLController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.opensource.indovinanumero.controller.FXMLController">
     <top>
         <Label alignment="CENTER" text="Indovina il Numero" textAlignment="CENTER" BorderPane.alignment="CENTER">
             <font>
-                <Font size="24.0"/>
+                <Font size="24.0" />
             </font>
             <BorderPane.margin>
-                <Insets bottom="25.0" left="5.0" right="5.0" top="10.0"/>
+                <Insets bottom="25.0" left="5.0" right="5.0" top="10.0" />
             </BorderPane.margin>
         </Label>
     </top>
     <bottom>
         <TextArea fx:id="txtRisultato" disable="true" editable="false" prefWidth="549.0" BorderPane.alignment="CENTER">
             <font>
-                <Font size="14.0"/>
+                <Font size="14.0" />
             </font>
             <BorderPane.margin>
-                <Insets/>
+                <Insets />
             </BorderPane.margin>
         </TextArea>
     </bottom>
     <center>
         <GridPane BorderPane.alignment="CENTER">
             <BorderPane.margin>
-                <Insets left="10.0"/>
+                <Insets left="10.0" />
             </BorderPane.margin>
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
                 <Label text="Tentativi Rimasti" GridPane.halignment="RIGHT">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets right="20.0"/>
+                        <Insets right="20.0" />
                     </GridPane.margin>
                 </Label>
-                <TextField fx:id="txtRimasti" disable="true" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0"
-                           GridPane.columnIndex="1">
+                <TextField fx:id="txtRimasti" disable="true" editable="false" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </TextField>
-                <TextField fx:id="txtTentativi" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" promptText="valore intero tra 1 e 100"
-                           GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <TextField fx:id="txtTentativi" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" promptText="valore intero tra 1 e 100" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </TextField>
-                <Button fx:id="btnNuovaPartita" mnemonicParsing="false" onAction="#doNuovaPartita" text="Nuova Partita"
-                        GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                <Button fx:id="btnNuovaPartita" mnemonicParsing="false" onAction="#doNuovaPartita" text="Nuova Partita" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                 </Button>
-                <Button fx:id="btnProva" mnemonicParsing="false" onAction="#doTentativo" text="Prova" GridPane.halignment="RIGHT"
-                        GridPane.rowIndex="1">
+                <Button fx:id="btnProva" mnemonicParsing="false" onAction="#doTentativo" text="Prova" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                     <font>
-                        <Font size="14.0"/>
+                        <Font size="14.0" />
                     </font>
                     <GridPane.margin>
-                        <Insets right="20.0"/>
+                        <Insets right="20.0" />
                     </GridPane.margin>
                 </Button>
             </children>
