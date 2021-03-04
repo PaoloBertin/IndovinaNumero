@@ -2,26 +2,31 @@ package it.opensource.indovinanumero.model;
 
 import java.security.InvalidParameterException;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class Model {
 
+    // minimo intervallo dei valori interi da indovinare
+    private static final int NMIN = 1;
+
+    // massimo intervallo dei valori interi da indovinare
     private final int NMAX = 100;
 
     private final int TMAX = 8;
 
+    private final Set<Integer> tentativiEffettuati = new HashSet<>();
+
     private int numeroSegreto;
 
-    // TODO in effetti il numero di tentivi effettuati si può dal numero di elementi in tentativiEffettuati
     private int numeroTentativiEffettuati;
 
     private boolean inGioco = false;
 
-    private final Set<Integer> tentativiEffettuati = new HashSet<>();
-
     public Model() {
 
-        this.numeroSegreto = (int) (Math.random() * NMAX) + 1;
+        Random random = new Random();
+        this.numeroSegreto = random.nextInt(NMAX) + NMIN;
     }
 
     public int getTMAX() {
@@ -126,4 +131,5 @@ public class Model {
             return true;
         }
     }
+
 }

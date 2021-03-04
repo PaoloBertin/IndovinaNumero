@@ -7,8 +7,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 public class App extends Application {
+
+    private static final Logger log = Logger.getLogger(App.class.getName());
 
     public static void main(String[] args) {
 
@@ -24,19 +27,22 @@ public class App extends Application {
 
         // crea la scena
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/styles.css");
+        // carica il foglio di stile associato alla vista
+        scene.getStylesheets()
+             .add("/styles/styles.css");
 
         // costruisce il controller associato alla vista
-        FXMLController controller;
-        controller = loader.getController();
+        FXMLController fxmlController;
+        fxmlController = loader.getController();
 
-        // definisce il modello associato alla vista // TODO NOOOOOOO !!! accoppia tecnologia UI con dominio applicazione
+        // crea il modello associato alla business logic e lo rende disponibile al controller della vista
         Model model = new Model();
-        controller.setModel(model); // TODO spostare l'inizializzzazione del modello in FXMLController
+        fxmlController.setModel(model);
 
         // definisce la finestra
         stage.setTitle("Indovina Numero");
         stage.setScene(scene);
         stage.show();
     }
+
 }

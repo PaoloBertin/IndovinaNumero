@@ -8,12 +8,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import org.apache.log4j.Logger;
 
 import java.net.URL;
 import java.security.InvalidParameterException;
 import java.util.ResourceBundle;
 
 public class FXMLController implements Initializable {
+
+    private static final Logger log = Logger.getLogger(FXMLController.class.getName());
 
     private Model model;
 
@@ -27,7 +30,7 @@ public class FXMLController implements Initializable {
     private TextArea txtRisultato;
 
     @FXML
-    private Button btnNuova;
+    private Button btnNuovaPartita;
 
     @FXML
     private TextField txtRimasti;
@@ -45,7 +48,7 @@ public class FXMLController implements Initializable {
      * @param event nuova partita
      */
     @FXML
-    void doNuova(ActionEvent event) {
+    void doNuovaPartita(ActionEvent event) {
 
         model.init();
 
@@ -85,10 +88,10 @@ public class FXMLController implements Initializable {
 
         if (esitoTentativo == 0) {
             txtRisultato.appendText("Hai vinto! Hai effettuato " + model.getNumeroTentativiEffettuati() + " tentativi");
-        }else if(esitoTentativo == -1) {
-            txtRisultato.appendText("valore " + valoreTentativo +  " troppo BASSO\n");
-        }else if (esitoTentativo == 1) {
-            txtRisultato.appendText("valore " + valoreTentativo +  " troppo ALTO\n");
+        } else if (esitoTentativo == -1) {
+            txtRisultato.appendText("valore " + valoreTentativo + " troppo BASSO\n");
+        } else if (esitoTentativo == 1) {
+            txtRisultato.appendText("valore " + valoreTentativo + " troppo ALTO\n");
         }
 
         txtRimasti.setText(Integer.toString(model.getTMAX() - model.getNumeroTentativiEffettuati()));
@@ -104,11 +107,11 @@ public class FXMLController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         assert txtRisultato != null : "fx:id=\"txtRisultato\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert btnNuova != null : "fx:id=\"btnNuova\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert btnNuovaPartita != null : "fx:id=\"btnNuova\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtRimasti != null : "fx:id=\"txtRimasti\" was not injected: check your FXML file 'Scene.fxml'.";
         assert layoutTentativo != null : "fx:id=\"layoutTentativo\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtTentativi != null : "fx:id=\"txtTentativi\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnProva != null : "fx:id=\"btnProva\" was not injected: check your FXML file 'Scene.fxml'.";
-
     }
+
 }
