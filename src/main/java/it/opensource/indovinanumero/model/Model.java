@@ -180,4 +180,9 @@ public class Model {
             return true;
         }
     }
+
+    public double getPercentualeTentativiEffettuati() {
+
+        return (double)getNumeroTentativiEffettuati() / TMAX;
+    }
 }

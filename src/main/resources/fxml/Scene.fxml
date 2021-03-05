@@ -89,7 +89,10 @@
                   <Insets right="50.0" />
                </GridPane.margin>
             </Label>
-            <ProgressBar fx:id="pgbTentativi" prefWidth="200.0" progress="0.0" GridPane.rowIndex="2" />
+            <ProgressBar fx:id="pgbTentativi" prefHeight="20.0" prefWidth="245.0" progress="0.0" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin></ProgressBar>
             </children>
         </GridPane>
     </center>

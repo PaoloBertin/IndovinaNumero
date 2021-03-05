@@ -84,7 +84,8 @@ public class FXMLController implements Initializable {
         } else if (esitoTentativo == 1) {
             txtMessaggio.appendText("valore " + valoreTentativo + " troppo ALTO\n");
         }
-
+        var percentuale = model.getPercentualeTentativiEffettuati();
+        pgbTentativi.setProgress(percentuale);
         lblNumeroTentativiRimasti.setText(Integer.toString(model.getNumeroTentiviRimasti()));
     }
 
@@ -118,6 +119,7 @@ public class FXMLController implements Initializable {
         txtMessaggio.clear();
         lblNumeroTentativiRimasti.setText(Integer.toString(model.getNumeroTentiviRimasti()));
         txtTentativo.clear();
+        pgbTentativi.setProgress(0);
     }
 }
 
