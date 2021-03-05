@@ -5,10 +5,7 @@ import it.opensource.indovinanumero.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.apache.log4j.Logger;
 
 import java.net.URL;
@@ -41,6 +38,9 @@ public class FXMLController implements Initializable {
 
     @FXML
     private Button btnNuovaPartita;
+
+    @FXML
+    private ProgressBar pgbTentativi;
 
     @FXML
     void doNuovaPartita(ActionEvent event) {
@@ -97,6 +97,7 @@ public class FXMLController implements Initializable {
         assert btnProva != null : "fx:id=\"btnProva\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtTentativo != null : "fx:id=\"txtTentativo\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnNuovaPartita != null : "fx:id=\"btnNuovaPartita\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert pgbTentativi != null : "fx:id=\"pgbTentativi\" was not injected: check your FXML file 'Scene.fxml'.";
 
         log.debug("inizializzato controller");
     }
