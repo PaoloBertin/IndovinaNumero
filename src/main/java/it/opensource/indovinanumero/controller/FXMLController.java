@@ -1,13 +1,14 @@
 package it.opensource.indovinanumero.controller;
 
 import it.opensource.indovinanumero.model.Model;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import org.apache.log4j.Logger;
 
 import java.net.URL;
@@ -27,88 +28,95 @@ public class FXMLController implements Initializable {
     private URL location;
 
     @FXML
-    private TextArea txtRisultato;
+    private TextArea txtMessaggio;
+
+    @FXML
+    private Label lblNumeroTentativiRimasti;
+
+    @FXML
+    private Button btnProva;
+
+    @FXML
+    private TextField txtTentativo;
 
     @FXML
     private Button btnNuovaPartita;
 
     @FXML
-    private TextField txtRimasti;
-
-    @FXML
-    private TextField txtTentativi;
-
-    @FXML
-    private Button btnProva;
-
-    /**
-     * @param event nuova partita
-     */
-    @FXML
     void doNuovaPartita(ActionEvent event) {
 
-        model.init();
-
-        //gestione dell'interfaccia
-        txtRisultato.clear();
-        txtRimasti.setText(Integer.toString(model.getTMAX()));
-        txtTentativi.clear();
+        // model.init();
+        // inizializza l'interfaccia
+        // txtMessaggio.clear();
+        // lblNumeroTentativiRimasti.setText(Integer.toString(model.getNumeroTentiviRimasti()));
+        // txtTentativo.clear();
+        inizializzaNuovaPartita();
     }
 
+    // TODO il metodo fa due compiti
+    // verifica l'input del giocatore
+    // verifica se si e' indovinato il valore correttto
     @FXML
     void doTentativo(ActionEvent event) {
-        //leggere l'input dell'utente
-        String ts = txtTentativi.getText();
+
+        //lettura tentativo utente
         int valoreTentativo;
         try {
-            valoreTentativo = Integer.parseInt(ts);
+            valoreTentativo = Integer.parseInt(txtTentativo.getText());
+            // verifica che il valore inserito sia valido (NMIN < n < NMAX e n diverso dai valori precedenti)
+            if (!model.tentativoValido(valoreTentativo)) {
+                txtMessaggio.appendText("Inserire un numero intero tra " + model.getNMIN() + " e " + model.getNMAX() + "\n");
+                return;
+            }
         } catch (NumberFormatException e) {
-            txtRisultato.appendText("Devi inserire un numero!\n");
+            txtMessaggio.appendText("Inserire un numero intero tra " + model.getNMIN() + " e " + model.getNMAX() + "\n");
+            log.debug("tentativo del giocatore = " + txtTentativo.getText());
             return;
         }
 
-        // esitoTentativo = 0   ->  valore tentativo corretto
-        // esitoTentativo = -1  ->  valore tentativo troppo basso
-        // esitoTentativo = 1   ->  valore tentativo troppo alto
-        int esitoTentativo = -1;
 
-        try {
-            esitoTentativo = model.verificaTentativo(valoreTentativo);
-        } catch (IllegalStateException se) {
-            txtRisultato.appendText(se.getMessage());
-            return;
-        } catch (InvalidParameterException parameterException) {
-            txtRisultato.appendText(parameterException.getMessage());
-            return;
-        }
-
+        int esitoTentativo = model.verificaTentativo(valoreTentativo);
         if (esitoTentativo == 0) {
-            txtRisultato.appendText("Hai vinto! Hai effettuato " + model.getNumeroTentativiEffettuati() + " tentativi");
+            txtMessaggio.appendText("Hai vinto! Hai effettuato " + model.getNumeroTentativiEffettuati() + " tentativi");
+            btnProva.setDisable(true);
         } else if (esitoTentativo == -1) {
-            txtRisultato.appendText("valore " + valoreTentativo + " troppo BASSO\n");
+            txtMessaggio.appendText("valore " + valoreTentativo + " troppo BASSO\n");
         } else if (esitoTentativo == 1) {
-            txtRisultato.appendText("valore " + valoreTentativo + " troppo ALTO\n");
+            txtMessaggio.appendText("valore " + valoreTentativo + " troppo ALTO\n");
         }
 
-        txtRimasti.setText(Integer.toString(model.getTMAX() - model.getNumeroTentativiEffettuati()));
-    }
-
-    public void setModel(Model model) {
-
-        this.model = model;
+        lblNumeroTentativiRimasti.setText(Integer.toString(model.getNumeroTentiviRimasti()));
     }
 
     @Override
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
 
-        log.trace("inizialize FXMLController");
-
-        assert txtRisultato != null : "fx:id=\"txtRisultato\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert btnNuovaPartita != null : "fx:id=\"btnNuova\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert txtRimasti != null : "fx:id=\"txtRimasti\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert txtTentativi != null : "fx:id=\"txtTentativi\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert txtMessaggio != null : "fx:id=\"txtMessagio\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert lblNumeroTentativiRimasti != null : "fx:id=\"lblNumeroTentativiRimasti\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnProva != null : "fx:id=\"btnProva\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert txtTentativo != null : "fx:id=\"txtTentativo\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert btnNuovaPartita != null : "fx:id=\"btnNuovaPartita\" was not injected: check your FXML file 'Scene.fxml'.";
+
+        log.debug("inizializzato controller");
     }
 
+    public void setModel(Model model) {
+
+        this.model = model;
+        inizializzaNuovaPartita();
+    }
+
+    private void inizializzaNuovaPartita() {
+
+        // inizializza modello
+        model.init();
+
+        // inizializza l'interfaccia
+        btnProva.setDisable(false);
+        txtMessaggio.clear();
+        lblNumeroTentativiRimasti.setText(Integer.toString(model.getNumeroTentiviRimasti()));
+        txtTentativo.clear();
+    }
 }
+

@@ -39,10 +39,11 @@ public class App extends Application {
         FXMLController fxmlController;
         fxmlController = loader.getController();
 
-        // crea il modello associato alla business logic e lo rende disponibile al controller della vista
+        // crea il modello e lo rende disponibile al controller della vista
+        // il modello e' creato qui in modo sia visibile, in generale, da piu' controller
         Model model = new Model();
         fxmlController.setModel(model);
-        log.trace("inizializato model in fxmlController");
+        log.trace("iniettato model in fxmlController");
 
         // definisce la finestra
         stage.setTitle("Indovina Numero");

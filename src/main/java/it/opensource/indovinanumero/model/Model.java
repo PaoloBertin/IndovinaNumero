@@ -1,32 +1,63 @@
 package it.opensource.indovinanumero.model;
 
+import org.apache.log4j.Logger;
+
 import java.security.InvalidParameterException;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * Business logic dell'applicazione
+ */
 public class Model {
 
-    // minimo intervallo dei valori interi da indovinare
+    private static final Logger log = Logger.getLogger(Model.class.getName());
+
+    // minimo intervallo valori interi da indovinare
     private static final int NMIN = 1;
 
-    // massimo intervallo dei valori interi da indovinare
-    private final int NMAX = 100;
+    /**
+     * massimo intervallo dei valori interi da indovinare
+     */
+    private static final int NMAX = 100;
 
-    private final int TMAX = 8;
+    /**
+     * numero massimo tentativi
+     */
+    private static final int TMAX = 8;
 
-    private final Set<Integer> tentativiEffettuati = new HashSet<>();
+    /**
+     * Collezione tentativi gia' effettuati
+     */
+    private final Set<Integer> tentativiGiaEffettuati = new HashSet<>();
 
+    /**
+     * Numero segreto da indovinare
+     */
     private int numeroSegreto;
 
-    private int numeroTentativiEffettuati;
-
+    /**
+     * E' attiva una partita
+     */
     private boolean inGioco = false;
 
+    /**
+     * Inizializza una nuova partita
+     */
     public Model() {
 
-        Random random = new Random();
-        this.numeroSegreto = random.nextInt(NMAX) + NMIN;
+        // init();
+    }
+
+    public int getNMIN() {
+
+        return NMIN;
+    }
+
+    public int getNMAX() {
+
+        return NMAX;
     }
 
     public int getTMAX() {
@@ -34,9 +65,24 @@ public class Model {
         return TMAX;
     }
 
+    public Set<Integer> getTentativiGiaEffettuati() {
+
+        return tentativiGiaEffettuati;
+    }
+
     public int getNumeroSegreto() {
 
         return numeroSegreto;
+    }
+
+    public void setNumeroSegreto(int numeroSegreto) {
+
+        this.numeroSegreto = numeroSegreto;
+    }
+
+    public int getNumeroTentativiEffettuati() {
+
+        return tentativiGiaEffettuati.size();
     }
 
     public boolean isInGioco() {
@@ -49,63 +95,61 @@ public class Model {
         this.inGioco = inGioco;
     }
 
-    public int getNumeroTentativiEffettuati() {
+    public int getNumeroTentiviRimasti() {
 
-        return numeroTentativiEffettuati;
-    }
-
-    public void setNumeroTentativiEffettuati(int numeroTentativiEffettuati) {
-
-        this.numeroTentativiEffettuati = numeroTentativiEffettuati;
-    }
-
-    public Set<Integer> getTentativiEffettuati() {
-
-        return tentativiEffettuati;
+        return TMAX - tentativiGiaEffettuati.size();
     }
 
     /**
-     * Inizializza nuova partita
+     * Inizializza lo stato del gioco
      */
     public void init() {
 
-        numeroSegreto = (int) (Math.random() * NMAX) + 1;
-        numeroTentativiEffettuati = 0;
-        inGioco = true;
-        tentativiEffettuati.clear();
+        Random random = new Random();
+        this.numeroSegreto = random.nextInt(NMAX) + NMIN;
+        this.inGioco = true;
+        this.tentativiGiaEffettuati.clear();
+
+        log.info("inizializzato modello per nuova partita");
+        log.debug("             numero segreto = " + numeroSegreto);
+        log.debug("                  in giooco = " + inGioco);
+
     }
 
     /**
-     * Verifiva se il valore intero tentato e' valido
+     * Verifica se il valore inserito corrisponde al valore da indovinare
      *
-     * @return boolean validita' del valore usato nel tentativo.
+     * @param valoreTentativo valore inserito dal giocatore
+     * @return esito confronto fra valore valore del tentativo e valore da indovinare
      */
     public int verificaTentativo(int valoreTentativo) {
 
+        tentativiGiaEffettuati.add(valoreTentativo);
+
+        // TODO non e' compito di questo metodo
         // verifica che la partita sia in corso
-        if (!inGioco) {
+        if (!isInGioco()) {
             throw new IllegalStateException("La partita è già terminata\n");
         }
 
-        // verifica che il valore dell'intero usato nel tentivo rientri nell'intervallo valido
-        if (!tentativoValido(valoreTentativo)) {
-            throw new InvalidParameterException("Devi inserire un numero che non hai ancora utilizzato tra 1 e " + NMAX + "\n");
-        }
+        // il valore del tentativo e' aggiungiunto ai tentativi gia' effettuati
+        tentativiGiaEffettuati.add(valoreTentativo);
 
-        // il valore del tentativo e' valido
-        numeroTentativiEffettuati++;
-        tentativiEffettuati.add(valoreTentativo);
-
+        // TODO non e' compito di questo metodo
         // se si e' raggiunto il numero massimo di tentativi la partita comunque termina
-        if (numeroTentativiEffettuati == TMAX) {
-            inGioco = false;
+        if (tentativiGiaEffettuati.size() == TMAX) {
+            //inGioco = false;
+            setInGioco(false);
         }
 
         // se si e' indovinato il numero
         if (valoreTentativo == numeroSegreto) {
+            log.debug("il valore " + valoreTentativo + " e' il numero segreto");
             inGioco = false;
             return 0;
         }
+
+        log.debug("il valore di tentativo " + valoreTentativo + " non e' il valore da indovinare");
 
         if (valoreTentativo < numeroSegreto) {
             return -1; // valore inserito basso
@@ -116,20 +160,24 @@ public class Model {
 
     /**
      * Verifica che il numero intero inserito sia valido
+     * <p>
+     * Il valore inserito n e' valido se:
+     * a) NMIN &lt; n &lt; NMAX
+     * b) n non e' stato utilizzato (non appartiene a tentiviEffettuati)
      *
-     * @param valoreTentativo
-     * @return boolean
+     * @param valoreTentativo tentativo soluzione
+     * @return boolean il tentativo e' valido
      */
-    private boolean tentativoValido(int valoreTentativo) {
+    public boolean tentativoValido(int valoreTentativo) {
 
-        if (valoreTentativo < 1 || valoreTentativo > NMAX) {
+        if ((valoreTentativo < 1) || (valoreTentativo > getNMAX())) {
+            log.debug("il valore di tentativo " + valoreTentativo + " non e' valido");
             return false;
         } else {
-            if (this.tentativiEffettuati.contains(valoreTentativo)) {
+            if (tentativiGiaEffettuati.contains(valoreTentativo)) {
                 return false;
             }
             return true;
         }
     }
-
 }
